@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="cadence.dotnet" Version="2.0.0" />
+    <PackageReference Include="cadence.dotnet" Version="1.2.0" />
     <PackageReference Include="Neon.Cadence" Version="2.15.0" />
   </ItemGroup>
 
