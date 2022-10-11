@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Xml;
 using cadence.dotnet;
+using cadence.dotnet.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

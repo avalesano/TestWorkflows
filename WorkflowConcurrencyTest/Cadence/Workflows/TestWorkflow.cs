@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Neon.Cadence;
+using Neon.Retry;
 using WorkflowConcurrencyTest.Cadence.Activities;
 
 namespace WorkflowConcurrencyTest.Cadence.Workflows
@@ -11,10 +12,19 @@ namespace WorkflowConcurrencyTest.Cadence.Workflows
     [Workflow(AutoRegister = true)]
     public class TestWorkflow : WorkflowBase, ITestWorkflow
     {
-        public async Task RunWorkflow()
+        public async Task RunWorkflow(TestParams testParams)
         {
             Workflow.Logger.LogInfo($"Workflow [{Workflow.Execution.WorkflowId}] started");
-            await Workflow.NewActivityStub<ITestActivity>().RunActivity();
+
+            // Default linear policy
+            var act = new ActivityOptions
+            {
+                RetryOptions = new RetryOptions(new LinearRetryPolicy()),
+                //ScheduleToCloseTimeout = TimeSpan.FromSeconds(5),
+                //StartToCloseTimeout = TimeSpan.FromSeconds(3),
+            };
+
+            await Workflow.NewActivityStub<ITestActivity>(act).RunActivity(testParams);
             Workflow.Logger.LogInfo($"Workflow [{Workflow.Execution.WorkflowId}] ending");
         }
     }
@@ -22,6 +32,6 @@ namespace WorkflowConcurrencyTest.Cadence.Workflows
     public interface ITestWorkflow : IWorkflow
     {
         [WorkflowMethod]
-        public Task RunWorkflow();
+        public Task RunWorkflow(TestParams testParams);
     }
 }
