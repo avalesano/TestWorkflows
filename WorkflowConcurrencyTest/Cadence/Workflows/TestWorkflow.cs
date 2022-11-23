@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using cadence.dotnet.Cadence;
 using Neon.Cadence;
-using Neon.Retry;
 using WorkflowConcurrencyTest.Cadence.Activities;
 
 namespace WorkflowConcurrencyTest.Cadence.Workflows
@@ -16,12 +16,9 @@ namespace WorkflowConcurrencyTest.Cadence.Workflows
         {
             Workflow.Logger.LogInfo($"Workflow [{Workflow.Execution.WorkflowId}] started");
 
-            // Default linear policy
             var act = new ActivityOptions
             {
-                RetryOptions = new RetryOptions(new LinearRetryPolicy()),
-                //ScheduleToCloseTimeout = TimeSpan.FromSeconds(5),
-                //StartToCloseTimeout = TimeSpan.FromSeconds(3),
+                RetryOptions = ActivityRetryOptions.Standard
             };
 
             await Workflow.NewActivityStub<ITestActivity>(act).RunActivity(testParams);

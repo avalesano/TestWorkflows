@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Neon.Cadence;
 using Neon.Common;
+using Neon.Diagnostics;
 
 namespace WorkflowConcurrencyTest
 {
@@ -15,6 +16,7 @@ namespace WorkflowConcurrencyTest
     {
         public static async Task Main(string[] args)
         {
+            LogManager.Default.SetLogLevel("debug");
             await CreateHostBuilder(args).Build().RunAsync();
         }
 
@@ -26,10 +28,7 @@ namespace WorkflowConcurrencyTest
                     configHost.AddEnvironmentVariables("ASPNETCORE_"))
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<ZegoWorker>();
-                    services.Configure<CadenceSettings>(hostContext.Configuration.GetSection(nameof(CadenceSettings)));
-                    NeonHelper.ServiceContainer.AddLogging();
-                    NeonHelper.ServiceContainer.AddScoped<ICorrelationHandler, CorrelationHandler>();
+                    services.AddZegoCadence(hostContext.Configuration);
                 });
         }
     }

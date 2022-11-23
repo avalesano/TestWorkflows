@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="cadence.dotnet" Version="1.4.8" />
+    <PackageReference Include="cadence.dotnet" Version="1.4.13-pr-9" />
     <PackageReference Include="Neon.Cadence" Version="2.18.2" />
   </ItemGroup>
 
