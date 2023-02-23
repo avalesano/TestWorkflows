@@ -1,13 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Xml;
-using cadence.dotnet;
-using cadence.dotnet.Interfaces;
+﻿using System.Threading.Tasks;
+using cadence.dotnet.Extensions;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Neon.Cadence;
-using Neon.Common;
 using Neon.Diagnostics;
 
 namespace WorkflowConcurrencyTest
