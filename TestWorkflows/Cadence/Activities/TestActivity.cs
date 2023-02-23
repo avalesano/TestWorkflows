@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Neon.Cadence;
 
-namespace WorkflowConcurrencyTest.Cadence.Activities
+namespace TestWorkflows.Cadence.Activities
 {
     [Activity(AutoRegister = true)]
     public class TestActivity : ActivityBase, ITestActivity

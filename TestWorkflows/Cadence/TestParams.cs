@@ -1,4 +1,4 @@
-﻿namespace WorkflowConcurrencyTest.Cadence
+﻿namespace TestWorkflows.Cadence
 {
     public class TestParams
     {

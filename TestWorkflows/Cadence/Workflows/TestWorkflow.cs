@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using cadence.dotnet.Cadence;
 using Neon.Cadence;
-using WorkflowConcurrencyTest.Cadence.Activities;
+using TestWorkflows.Cadence.Activities;
 
-namespace WorkflowConcurrencyTest.Cadence.Workflows
+namespace TestWorkflows.Cadence.Workflows
 {
     [Workflow(AutoRegister = true)]
     public class TestWorkflow : WorkflowBase, ITestWorkflow

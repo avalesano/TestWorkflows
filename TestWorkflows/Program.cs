@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Neon.Diagnostics;
 
-namespace WorkflowConcurrencyTest
+namespace TestWorkflows
 {
     class Program
     {
