@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.357
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowConcurrencyTest", "WorkflowConcurrencyTest\WorkflowConcurrencyTest.csproj", "{F443C588-0637-4FC3-9D81-0C9910EE58F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWorkflows", "TestWorkflows\TestWorkflows.csproj", "{F443C588-0637-4FC3-9D81-0C9910EE58F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
