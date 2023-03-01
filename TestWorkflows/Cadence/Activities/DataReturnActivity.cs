@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using cadence.dotnet;
 using Neon.Cadence;
@@ -7,11 +8,11 @@ using TestWorkflows.Cadence.Models;
 namespace TestWorkflows.Cadence.Activities
 {
     [Activity(AutoRegister = true)]
-    public class TestActivity : ActivityBase, ITestActivity
+    public class DataReturnActivity : ActivityBase, IDataReturnActivity
     {
         private readonly CorrelationHandler _correlationHandler;
 
-        public TestActivity()
+        public DataReturnActivity()
         {
             _correlationHandler = new CorrelationHandler(this);
         }
@@ -22,23 +23,31 @@ namespace TestWorkflows.Cadence.Activities
         /// <param name="testParams"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task RunActivity(TestParams testParams)
+        public async Task<ActivityResult> RunActivity(TestParams testParams)
         {
-            _correlationHandler.LogStart(GetType().Name);
-            _correlationHandler.LogInformation($"Waiting for {testParams.WaitTimeMs}ms");
+            Activity.Logger.LogInfo($"{GetType().Name} [{Activity.Task.ActivityId}] started");
+            Activity.Logger.LogInfo($"Waiting for {testParams.WaitTimeMs}ms");
             await Task.Delay(testParams.WaitTimeMs);
             var rng = new Random();
             if (rng.Next(100) < testParams.ExceptionPercent)
             {
                 throw new Exception("TEST EXCEPTION!");
             }
-            _correlationHandler.LogComplete(GetType().Name);
+
+            var returnData = new byte[testParams.ReturnSize];
+            rng.NextBytes(returnData);
+            var result = new ActivityResult
+            {
+                DataBytes = returnData
+            };
+            Activity.Logger.LogInfo($"{GetType().Name} [{Activity.Task.ActivityId}] ending");
+            return result;
         }
     }
 
-    public interface ITestActivity : IActivity
+    public interface IDataReturnActivity : IActivity
     {
         [ActivityMethod]
-        public Task RunActivity(TestParams testParams);
+        public Task<ActivityResult> RunActivity(TestParams testParams);
     }
 }

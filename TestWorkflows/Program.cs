@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using cadence.dotnet;
 using cadence.dotnet.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +23,12 @@ namespace TestWorkflows
                     configHost.AddEnvironmentVariables("ASPNETCORE_"))
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddZegoCadence(hostContext.Configuration);
+                    services.AddZegoCadence(hostContext.Configuration, new SetupSettings
+                    {
+                        EnableSecrets = false,
+                        EnableWorker = true,
+                    });
+                    //services.AddSingleton<IHealthCheckPublisher, HealthCheckPublisher>();
                 });
         }
     }
