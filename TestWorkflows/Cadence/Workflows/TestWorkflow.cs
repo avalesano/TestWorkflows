@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using cadence.dotnet;
 using cadence.dotnet.Cadence;
+using cadence.dotnet.Cadence.Workflow;
 using cadence.dotnet.Interfaces;
 using Neon.Cadence;
 using TestWorkflows.Cadence.Activities;
@@ -18,7 +21,7 @@ namespace TestWorkflows.Cadence.Workflows
             _correlationHandler = new CorrelationHandler(this);
         }
 
-        public async Task RunWorkflow(TestParams testParams)
+        public async Task<WorkflowResult> RunWorkflow(TestParams testParams)
         {
             _correlationHandler.LogStart($"{GetType().Name}");
 
@@ -27,6 +30,11 @@ namespace TestWorkflows.Cadence.Workflows
                 RetryOptions = ActivityRetryOptions.Standard
             };
 
+            if (await Workflow.NextRandomAsync(100) < testParams.WorkflowExceptionPercent)
+            {
+                throw new Exception("WORKFLOW EXCEPTION!");
+            }
+
             for (var i = 0; i < testParams.ActivityExecutions; i++)
             {
                 _correlationHandler.LogInformation($"Executing Activity [{i + 1}/{testParams.ActivityExecutions}]");
@@ -34,6 +42,19 @@ namespace TestWorkflows.Cadence.Workflows
             }
 
             _correlationHandler.LogComplete($"{GetType().Name}");
+
+            return new WorkflowResult
+            {
+                Steps = new List<WorkflowStep>
+                {
+                    new WorkflowStep
+                    {
+                        Success = true,
+                        WorkflowStepName = "TestStep",
+                        WorkflowStepDescription = "TestStepDescription",
+                    }
+                }
+            };
         }
     }
 
@@ -41,6 +62,6 @@ namespace TestWorkflows.Cadence.Workflows
     public interface ITestWorkflow : IWorkflow
     {
         [WorkflowMethod]
-        public Task RunWorkflow(TestParams testParams);
+        public Task<WorkflowResult> RunWorkflow(TestParams testParams);
     }
 }

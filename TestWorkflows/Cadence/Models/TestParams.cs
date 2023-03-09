@@ -7,7 +7,7 @@
         /// </summary>
         public int WaitTimeMs { get; set; } = 5000;
         /// <summary>
-        /// Percent chance to throw an exception.  Must be an integer from 0 to 100.
+        /// Percent chance for Activities to throw an exception.  Must be an integer from 0 to 100.
         /// </summary>
         public int ExceptionPercent { get; set; } = 50;
         /// <summary>
@@ -18,5 +18,9 @@
         /// Size in bytes of the data to be returned from the activity
         /// </summary>
         public int ReturnSize { get; set; } = 0;
+        /// <summary>
+        /// Percent chance for the Workflow to throw an exception.  Must be an integer from 0 to 100.
+        /// </summary>
+        public int WorkflowExceptionPercent { get; set; } = 0;
     }
 }

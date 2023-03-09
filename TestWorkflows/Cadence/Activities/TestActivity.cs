@@ -30,7 +30,7 @@ namespace TestWorkflows.Cadence.Activities
             var rng = new Random();
             if (rng.Next(100) < testParams.ExceptionPercent)
             {
-                throw new Exception("TEST EXCEPTION!");
+                throw new Exception("ACTIVITY EXCEPTION!");
             }
             _correlationHandler.LogComplete(GetType().Name);
         }
